@@ -30,3 +30,6 @@ u = LOAD 'data.csv' USING PigStorage(',')
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
 
+tb0 = FOREACH u GENERATE SUBSTRING(birthday,0,4), SUBSTRING(birthday,2,4);
+
+STORE tb0 INTO 'output' USING PigStorage(',');

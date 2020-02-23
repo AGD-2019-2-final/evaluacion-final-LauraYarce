@@ -13,7 +13,7 @@
 --   Conway,6
 -- 
 -- Escriba el resultado a la carpeta `output` del directorio actual.
--- 
+
 fs -rm -f -r output;
 --
 u = LOAD 'data.csv' USING PigStorage(',') 
@@ -26,3 +26,9 @@ u = LOAD 'data.csv' USING PigStorage(',')
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+tb0 = FOREACH u GENERATE $2;
+tb1 = FOREACH tb0 GENERATE $0, SIZE($0) AS cuenta;
+tb2 = ORDER tb1 BY cuenta DESC, $0 ASC;
+tb3 = LIMIT tb2 5;
+
+STORE tb3 INTO 'output' USING PigStorage(',');
